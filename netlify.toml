@@ -1,0 +1,47 @@
+[build]
+  # Папка для публикации (все файлы в корне)
+  publish = "."
+  
+  # Команда сборки (не нужна для статического сайта)
+  command = ""
+
+[build.environment]
+  # Версия Node.js для функций Netlify (если понадобятся)
+  NODE_VERSION = "18"
+
+# Перенаправления для SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Заголовки безопасности
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Заголовки для HTML файлов
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Заголовки для статических ресурсов
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+# Функции Netlify (если понадобятся в будущем)
+[functions]
+  directory = "netlify/functions"
